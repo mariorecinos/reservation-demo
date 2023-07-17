@@ -14,8 +14,6 @@ const reservationSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    userName: String,
-    userAvatar: String,
     roundLength: {type: Number,
         enum: [9,18],
         default: 18
