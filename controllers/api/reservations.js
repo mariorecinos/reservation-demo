@@ -28,7 +28,16 @@ asnyc function getAllReservations(req, res) {
     const reservations = await Reservation.find({ user: req.user._id });
     res.json(reservations);
   } catch (error) {
-    res.status(400).json({ error: 'Failed to get reservations' });
+    res.json (error)
   }
 };
 
+// Controller for retrieving a specific reservation by ID
+async function getReservationById(req, res) {
+  try {
+    const reservation = await Reservation.findById(req.params.id);
+    res.json(reservation);
+  } catch (error) {
+    res.json(error)
+  }
+};
