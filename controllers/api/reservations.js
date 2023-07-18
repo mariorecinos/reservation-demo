@@ -55,3 +55,14 @@ async function updateReservation(req, res)  {
     res.status(400).json({ error: 'Failed to update reservation' });
   }
 };
+
+// Controller for deleting a reservation
+async function deleteReservation(req, res) {
+  try {
+    await Reservation.findByIdAndDelete(req.params.id);
+    const reservations = await Reservation.find({ user: req.user._id })
+    res.json(reservations)
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to delete reservation' });
+  }
+};
