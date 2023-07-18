@@ -12,7 +12,7 @@ module.exports = {
 
 async function createReservation(req, res) {
   try {
-    user = req.user._id
+    req.body.user = req.user._id
     const reservation = await Reservation.create(req.body);
     res.json(reservation)
 
@@ -34,7 +34,7 @@ async function getAllReservations(req, res) {
 // Controller for retrieving a specific reservation by ID
 async function getReservationById(req, res) {
   try {
-    const reservation = await Reservation.findById(req.params.id);
+    const reservation = await Reservation.findById({_id: req.params.id});
     res.json(reservation);
   } catch (error) {
     res.json(error)
@@ -59,7 +59,7 @@ async function updateReservation(req, res)  {
 // Controller for deleting a reservation
 async function deleteReservation(req, res) {
   try {
-    await Reservation.findByIdAndDelete(req.params.id);
+    await Reservation.findByIdAndDelete({ _id: req.params.id, user: req.user._id });
     const reservations = await Reservation.find({ user: req.user._id })
     res.json(reservations)
   } catch (error) {
